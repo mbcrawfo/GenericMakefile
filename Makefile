@@ -40,7 +40,7 @@ endif
 release: export CXXFLAGS := $(CXXFLAGS) $(COMPILE_FLAGS) $(RCOMPILE_FLAGS)
 release: export LD_FLAGS := $(LD_FLAGS) $(LINK_FLAGS) $(RLINK_FLAGS)
 debug: export CXXFLAGS := $(CXXFLAGS) $(COMPILE_FLAGS) $(DCOMPILE_FLAGS)
-debug: export LD_FLAGS := $(LD_FALGS) $(LINK_FLAGS) $(DLINK_FLAGS)
+debug: export LD_FLAGS := $(LD_FLAGS) $(LINK_FLAGS) $(DLINK_FLAGS)
 
 # Build and output paths
 release: export BUILD_PATH := build/release
