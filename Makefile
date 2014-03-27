@@ -21,8 +21,10 @@ LINK_FLAGS =
 RLINK_FLAGS = 
 # Additional debug-specific linker settings
 DLINK_FLAGS = 
-# install path (bin/ is appended automatically)
-INSTALL_PREFIX = /usr/local
+# Destination directory, like a jail or mounted system
+DESTDIR = /
+# Install path (bin/ is appended automatically)
+INSTALL_PREFIX = usr/local
 #### END PROJECT SETTINGS ####
 
 # Generally should not need to edit below this line
@@ -106,8 +108,8 @@ dirs:
 # Installs to the set path
 .PHONY: install
 install:
-	@echo "Installing to $(INSTALL_PREFIX)/bin"
-	@install -m 0755 $(BIN_PATH)/$(BIN_NAME) $(INSTALL_PREFIX)/bin
+	@echo "Installing to $(DESTDIR)$(INSTALL_PREFIX)/bin"
+	@install -m 0755 $(BIN_PATH)/$(BIN_NAME) $(DESTDIR)$(INSTALL_PREFIX)/bin
 
 # Removes all build files
 .PHONY: clean
