@@ -23,12 +23,12 @@ preprocessor:
 * *VERSION_HASH* - The SHA of the current commit. Includes the "-dirty" suffix  if there are uncommited changes.
 
 #Limitations:
+* Assumes GNU make.
 * Doesn't really support multiple types of source files in the same project.
-* Deleting a header file requires a "make clean" and full recompile, unless
-  you want to manually find and delete all the dependency files that use it.
 * No easy way to exclude files from the build. You can either change the
   extension of files to be excluded, or use preprocessor flags for
   conditional compilation.
 
-Thanks to my friend Jay and people on Stack Overflow for help with regex
-to parse the version info.
+#Thanks to:
+* My friend Jay and people on Stack Overflow for help with regex to parse the version info.
+* The residents of /r/programming for suggesting numerous tweaks and improvements.
