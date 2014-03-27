@@ -11,6 +11,7 @@ dependency lists.
 * Includes configurations for normal (release) build and debug build suitable for GDB debugging.
 * Times the compilation of each file and the entire build.
 * Generates version numbers based on git tags (see below), which are passed the compiler as preprocessor macros.
+* By default, builds in a "quiet" mode that only lists the actions being performed. By passing V=true to make, you can compile in verbose mode to see the full compiler commands being issued.
 
 ##Git Tags:
 Tags should be made in the format "vMAJOR.MINOR[-description]", where MAJOR
