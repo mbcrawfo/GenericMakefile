@@ -10,8 +10,8 @@ SRC_PATH = .
 # Set general compiler flags
 override CXXFLAGS := $(CXXFLAGS) -std=c++11 -Wall -Wextra
 # Build specific compiler flags
-release: export CXXFLAGS +=
-debug: export CXXFLAGS += -g -D NDEBUG
+release: export CXXFLAGS += -D NDEBUG
+debug: export CXXFLAGS += -g 
 # Add additional include paths
 export INCLUDES = -I $(SRC_PATH)/
 # Set general linker settings
