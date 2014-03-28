@@ -13,14 +13,13 @@ dependency lists.
 * Generates version numbers based on git tags (see below), which are passed the compiler as preprocessor macros.
 * By default, builds in a "quiet" mode that only lists the actions being performed. By passing V=true to make, you can compile in verbose mode to see the full compiler commands being issued.
 
-##Git Tags:
-Tags should be made in the format "vMAJOR.MINOR[-description]", where MAJOR
-and MINOR are numeric. Four macros will be generated and passed to the
-preprocessor:
-* *VERSION_MAJOR* - The major version number from the most recent tag.
-* *VERSION_MINOR* - The minor version number from the most recent tag.
-* *VERSION_REVISION* - The number of commits since the most recent tag.
-* *VERSION_HASH* - The SHA of the current commit. Includes the "-dirty" suffix  if there are uncommited changes.
+##Versioning:
+Tags should be made in the format "vMAJOR.MINOR.PATCH[-description]", where MAJOR, MINOR and PATCH are numeric. The following macros will be generated and passed to the preprocessor:
+* VERSION_MAJOR (int) - The major version number from the most recent tag.
+* VERSION_MINOR (int) - The minor version number from the most recent tag.
+* VERSION_PATCH (int) - The patch version number from the most recent tag.
+* VERSION_REVISION (int) - The number of commits since the most recent tag.
+* VERSION_HASH (string) - The SHA of the current commit. Includes the "-dirty" suffix if there are uncommited changes.
 
 #Limitations:
 * Assumes GNU make.
