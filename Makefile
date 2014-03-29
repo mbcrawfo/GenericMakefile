@@ -2,17 +2,17 @@
 # The name of the executable to be created
 BIN_NAME := hello
 # Compiler used
-CXX = g++
+CXX ?= g++
 # Extension of source files used in the project
 SRC_EXT = cpp
 # Path to the source directory, relative to the makefile
 SRC_PATH = .
 # General compiler flags
-COMPILE_FLAGS = -std=c++11 -Wall -Wextra
+COMPILE_FLAGS = -std=c++11 -Wall -Wextra -g
 # Additional release-specific flags
 RCOMPILE_FLAGS = -D NDEBUG
 # Additional debug-specific flags
-DCOMPILE_FLAGS = -g 
+DCOMPILE_FLAGS = -D DEBUG
 # Add additional include paths
 INCLUDES = -I $(SRC_PATH)/
 # General linker settings
@@ -28,6 +28,16 @@ INSTALL_PREFIX = usr/local
 #### END PROJECT SETTINGS ####
 
 # Generally should not need to edit below this line
+
+# Shell used in this makefile
+# bash is used for 'echo -en'
+SHELL = /bin/bash
+# Clear built-in rules
+.SUFFIXES:
+# Programs for installation
+INSTALL = install
+INSTALL_PROGRAM = $(INSTALL)
+INSTALL_DATA = $(INSTALL) -m 644
 
 # Verbose option, to output compile and link commands
 export V = false
@@ -112,7 +122,13 @@ dirs:
 .PHONY: install
 install:
 	@echo "Installing to $(DESTDIR)$(INSTALL_PREFIX)/bin"
-	@install -m 0755 $(BIN_PATH)/$(BIN_NAME) $(DESTDIR)$(INSTALL_PREFIX)/bin
+	@$(INSTALL_PROGRAM) $(BIN_PATH)/$(BIN_NAME) $(DESTDIR)$(INSTALL_PREFIX)/bin
+
+# Uninstalls the program
+.PHONY: uninstall
+uninstall:
+	@echo "Removing $(DESTDIR)$(INSTALL_PREFIX)/bin/$(BIN_NAME)"
+	@$(RM) $(DESTDIR)$(INSTALL_PREFIX)/bin/$(BIN_NAME)
 
 # Removes all build files
 .PHONY: clean
