@@ -23,6 +23,7 @@ Tags should be made in the format "vMAJOR.MINOR.PATCH[-description]", where MAJO
 
 #Limitations:
 * Assumes GNU make.
+* Timing does not work correctly with MacOS. See issue #6 for a workaround patch that allows timing in seconds on Mac.
 * Doesn't really support multiple types of source files in the same project.
 * No easy way to exclude files from the build. You can either change the
   extension of files to be excluded, or use preprocessor flags for
