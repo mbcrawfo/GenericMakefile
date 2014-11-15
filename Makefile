@@ -11,9 +11,6 @@ SRC_PATH = .
 LIBS =
 # General compiler flags
 COMPILE_FLAGS = -std=c++11 -Wall -Wextra -g
-ifneq ($(LIBS),)
-	COMPILE_FLAGS += $(shell pkg-config --cflags $(LIBS))
-endif
 # Additional release-specific flags
 RCOMPILE_FLAGS = -D NDEBUG
 # Additional debug-specific flags
@@ -22,9 +19,6 @@ DCOMPILE_FLAGS = -D DEBUG
 INCLUDES = -I $(SRC_PATH)/
 # General linker settings
 LINK_FLAGS = 
-ifneq ($(LIBS),)
-	LINK_FLAGS += $(shell pkg-config --libs $(LIBS))
-endif
 # Additional release-specific linker settings
 RLINK_FLAGS = 
 # Additional debug-specific linker settings
@@ -46,6 +40,12 @@ SHELL = /bin/bash
 INSTALL = install
 INSTALL_PROGRAM = $(INSTALL)
 INSTALL_DATA = $(INSTALL) -m 644
+
+# Append pkg-config specific libraries if need be
+ifneq ($(LIBS),)
+	COMPILE_FLAGS += $(shell pkg-config --cflags $(LIBS))
+	LINK_FLAGS += $(shell pkg-config --libs $(LIBS))
+endif
 
 # Verbose option, to output compile and link commands
 export V := false
