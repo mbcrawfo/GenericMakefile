@@ -7,8 +7,13 @@ CXX ?= g++
 SRC_EXT = cpp
 # Path to the source directory, relative to the makefile
 SRC_PATH = .
+# Space-separated pkg-config libraries used by this project
+LIBS =
 # General compiler flags
 COMPILE_FLAGS = -std=c++11 -Wall -Wextra -g
+ifneq ($(LIBS),)
+	COMPILE_FLAGS += $(shell pkg-config --cflags $(LIBS))
+endif
 # Additional release-specific flags
 RCOMPILE_FLAGS = -D NDEBUG
 # Additional debug-specific flags
@@ -17,6 +22,9 @@ DCOMPILE_FLAGS = -D DEBUG
 INCLUDES = -I $(SRC_PATH)/
 # General linker settings
 LINK_FLAGS = 
+ifneq ($(LIBS),)
+	LINK_FLAGS += $(shell pkg-config --libs $(LIBS))
+endif
 # Additional release-specific linker settings
 RLINK_FLAGS = 
 # Additional debug-specific linker settings
