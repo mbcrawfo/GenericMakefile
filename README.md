@@ -3,7 +3,8 @@ GenericMakefile
 
 A generic makefile for use with small/medium C and C++ projects. Allows for
 easy project setup without the need to create tedious build rules or
-dependency lists.
+dependency lists. The c directory contains a makefile configured for C, while
+the makefile in the cpp directory is configured for C++.
 
 #Features:
 * Automatically finds and compiles all source files within the source directory.
