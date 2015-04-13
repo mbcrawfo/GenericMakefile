@@ -31,6 +31,11 @@ INSTALL_PREFIX = usr/local
 
 # Generally should not need to edit below this line
 
+# Function used to check variables. Use on the command line:
+# make print-VARNAME
+# Useful for debugging and adding features
+print-%: ; @echo $*=$($*)
+
 # Shell used in this makefile
 # bash is used for 'echo -en'
 SHELL = /bin/bash
