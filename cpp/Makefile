@@ -104,7 +104,7 @@ USE_VERSION := false
 ifeq ($(shell git describe > /dev/null 2>&1 ; echo $$?), 0)
 	USE_VERSION := true
 	VERSION := $(shell git describe --tags --long --dirty --always | \
-		sed 's/v\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)-\?.*-\([0-9]*\)-\(.*\)/\1 \2 \3 \4 \5/g')
+    sed -r 's/v([0-9]*)\.([0-9]*)\.([0-9]*)-\?.*-([0-9]*)-(.*)/\1 \2 \3 \4 \5/g')
 	VERSION_MAJOR := $(word 1, $(VERSION))
 	VERSION_MINOR := $(word 2, $(VERSION))
 	VERSION_PATCH := $(word 3, $(VERSION))
