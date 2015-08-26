@@ -18,11 +18,11 @@ DCOMPILE_FLAGS = -D DEBUG
 # Add additional include paths
 INCLUDES = -I $(SRC_PATH)/
 # General linker settings
-LINK_FLAGS = 
+LINK_FLAGS =
 # Additional release-specific linker settings
-RLINK_FLAGS = 
+RLINK_FLAGS =
 # Additional debug-specific linker settings
-DLINK_FLAGS = 
+DLINK_FLAGS =
 # Destination directory, like a jail or mounted system
 DESTDIR = /
 # Install path (bin/ is appended automatically)
@@ -30,6 +30,9 @@ INSTALL_PREFIX = usr/local
 #### END PROJECT SETTINGS ####
 
 # Generally should not need to edit below this line
+
+# Obtains the OS type, either 'Darwin' (OS X) or 'Linux'
+UNAME_S:=$(shell uname -s)
 
 # Function used to check variables. Use on the command line:
 # make print-VARNAME
@@ -56,7 +59,7 @@ endif
 export V := false
 export CMD_PREFIX := @
 ifeq ($(V),true)
-	CMD_PREFIX := 
+	CMD_PREFIX :=
 endif
 
 # Combine compiler and linker flags
@@ -74,8 +77,13 @@ install: export BIN_PATH := bin/release
 
 # Find all source files in the source directory, sorted by most
 # recently modified
-SOURCES = $(shell find $(SRC_PATH)/ -name '*.$(SRC_EXT)' -printf '%T@\t%p\n' \
-					| sort -k 1nr | cut -f2-)
+ifeq ($(UNAME_S),Darwin)
+	SOURCES = $(shell find $(SRC_PATH)/ -name '*.$(SRC_EXT)' | sort -k 1nr | cut -f2-)
+else
+	SOURCES = $(shell find $(SRC_PATH)/ -name '*.$(SRC_EXT)' -printf '%T@\t%p\n' \
+						| sort -k 1nr | cut -f2-)
+endif
+
 # fallback in case the above fails
 rwildcard = $(foreach d, $(wildcard $1*), $(call rwildcard,$d/,$2) \
 						$(filter $(subst *,%,$2), $d))
@@ -90,12 +98,22 @@ OBJECTS = $(SOURCES:$(SRC_PATH)/%.$(SRC_EXT)=$(BUILD_PATH)/%.o)
 DEPS = $(OBJECTS:.o=.d)
 
 # Macros for timing compilation
-TIME_FILE = $(dir $@).$(notdir $@)_time
-START_TIME = date '+%s' > $(TIME_FILE)
-END_TIME = read st < $(TIME_FILE) ; \
-	$(RM) $(TIME_FILE) ; \
-	st=$$((`date '+%s'` - $$st - 86400)) ; \
-	echo `date -u -d @$$st '+%H:%M:%S'` 
+ifeq ($(UNAME_S),Darwin)
+	CUR_TIME = awk 'BEGIN{srand(); print srand()}'
+	TIME_FILE = $(dir $@).$(notdir $@)_time
+	START_TIME = $(CUR_TIME) > $(TIME_FILE)
+	END_TIME = read st < $(TIME_FILE) ; \
+		$(RM) $(TIME_FILE) ; \
+		st=$$((`$(CUR_TIME)` - $$st)) ; \
+		echo $$st
+else
+	TIME_FILE = $(dir $@).$(notdir $@)_time
+	START_TIME = date '+%s' > $(TIME_FILE)
+	END_TIME = read st < $(TIME_FILE) ; \
+		$(RM) $(TIME_FILE) ; \
+		st=$$((`date '+%s'` - $$st - 86400)) ; \
+		echo `date -u -d @$$st '+%H:%M:%S'`
+endif
 
 # Version macros
 # Comment/remove this section to remove versioning
@@ -200,4 +218,3 @@ $(BUILD_PATH)/%.o: $(SRC_PATH)/%.$(SRC_EXT)
 	$(CMD_PREFIX)$(CXX) $(CXXFLAGS) $(INCLUDES) -MP -MMD -c $< -o $@
 	@echo -en "\t Compile time: "
 	@$(END_TIME)
-
