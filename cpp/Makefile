@@ -29,6 +29,10 @@ DESTDIR = /
 INSTALL_PREFIX = usr/local
 #### END PROJECT SETTINGS ####
 
+# Optionally you may move the section above to a separate config.mk file, and
+# uncomment the line below
+# include config.mk
+
 # Generally should not need to edit below this line
 
 # Obtains the OS type, either 'Darwin' (OS X) or 'Linux'
