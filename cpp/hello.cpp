@@ -12,5 +12,6 @@ int main(int argc, char* argv[])
   {
     std::cout << "C++ while loop being executed"<<"\n";
   }
+  std::cout << "While loop has come to an end. \n";
   return 0;
 }
