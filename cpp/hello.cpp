@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
   std::cin >> args;
   while(args--)
   {
-    std::cout << "C++ while loop being executed";
+    std::cout << "C++ while loop being executed"<<"\n";
   }
   return 0;
 }
